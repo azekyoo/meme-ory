@@ -11,9 +11,9 @@
     while (outlet.lastChild) {
       outlet.removeChild(outlet.lastChild);
     }
+  
+    outlet.appendChild(template);
   }
-  outlet.appendChild(template);
-
   /**
    * Create a new router. This router will load components into the given outlet.
    * @param {HTMLElement} outlet The element to put components into.
