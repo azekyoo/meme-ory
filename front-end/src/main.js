@@ -23,20 +23,20 @@ router
   .register("", {
     component: WelcomeComponent,
     // TODO #import-html: remove the templateUrl property.
-    templateUrl: "/src/app/views/welcome.html",
+    //templateUrl: "/src/app/views/welcome.html",
   })
   .register("welcome", {
     component: WelcomeComponent,
     // TODO #import-html: remove the templateUrl property.
-    templateUrl: "/src/app/views/welcome.html",
+    //templateUrl: "/src/app/views/welcome.html",
   })
   .register("game", {
     component: GameComponent,
     // TODO #import-html: remove the templateUrl property.
-    templateUrl: "/src/app/views/game.html",
+    //templateUrl: "/src/app/views/game.html",
   })
   .register("score", {
     component: ScoreComponent,
     // TODO #import-html: remove the templateUrl property.
-    templateUrl: "/src/app/views/score.html",
+    //templateUrl: "/src/app/views/score.html",
   });
