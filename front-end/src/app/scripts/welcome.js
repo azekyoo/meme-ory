@@ -3,14 +3,13 @@ import { Component } from "./component";
 
 export class WelcomeComponent extends Component{
   constructor() {
-    // TODO #extends: call super(template)
   super(template)
   }
   _startGame(name, size) {
 
     let gamePage = "./#game";
-    // TODO #template-literals:  use template literals (backquotes)
-    window.location = gamePage + "?name=" + name + "&size=" + size;
+    window.location = `${gamePage}?name=${name}&size=${size}`;
+
   }
 
   init() {
@@ -18,8 +17,7 @@ export class WelcomeComponent extends Component{
 
     form.addEventListener(
         "submit",
-        // TODO #arrow-function: use arrow function instead.
-        function (event) {
+        (event) => {
           event.preventDefault();
           if (form.checkValidity() === false) {
             event.stopPropagation();
@@ -30,7 +28,7 @@ export class WelcomeComponent extends Component{
 
             this._startGame(name, size);
           }
-        }.bind(this),
+        },
         false
     );
 

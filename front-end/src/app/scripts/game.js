@@ -36,7 +36,7 @@ export class GameComponent extends Component{
     // fetch the cards configuration from the server
     this.fetchConfig(
       // TODO #arrow-function: use arrow function instead.
-      function (config) {
+      (config) => {
         this._config = config;
         this._boardElement = document.querySelector(".cards");
 
@@ -58,48 +58,40 @@ export class GameComponent extends Component{
           card.getElement().addEventListener(
             "click",
             // TODO #arrow-function: use arrow function instead.
-            function () {
+            () =>  {
               this._flipCard(card);
-            }.bind(this)
+            }
           );        }
 
         this.start();
-      }.bind(this)
+      }
     );
   }
 
 
-  /* method GameComponent.start */
   start() {
     this._startTime = Date.now();
     let seconds = 0;
-    // TODO #template-literals:  use template literals (backquotes)
     document.querySelector("nav .navbar-title").textContent =
-      "Player: " + this._name + ". Elapsed time: " + seconds++;
+  `Player: ${this._name}. Elapsed time: ${seconds++}`;
 
-    this._timer = setInterval(
-      // TODO #arrow-function: use arrow function instead.
-      function () {
-        // TODO #template-literals:  use template literals (backquotes)
-        document.querySelector("nav .navbar-title").textContent =
-          "Player: " + this._name + ". Elapsed time: " + seconds++;
-      }.bind(this),
-      1000
-    );
+this._timer = setInterval(() => {
+  document.querySelector("nav .navbar-title").textContent =
+    `Player: ${this._name}. Elapsed time: ${seconds++}`;
+}, 1000);
+
   }
 
-  /* method GameComponent.fetchConfig */
   fetchConfig(cb) {
     let xhr =
       typeof XMLHttpRequest != "undefined"
         ? new XMLHttpRequest()
         : new ActiveXObject("Microsoft.XMLHTTP");
 
-    // TODO #template-literals:  use template literals (backquotes)
-    xhr.open("get", environment.api.host + "/board?size=" + this._size, true);
+    xhr.open("get", `${environment.api.host}/board?size=${this._size}`, true);
 
-    // TODO #arrow-function: use arrow function instead.
-    xhr.onreadystatechange = function () {
+
+    xhr.onreadystatechange = () => {
       let status;
       let data;
       // https://xhr.spec.whatwg.org/#dom-xmlhttprequest-readystate
@@ -117,7 +109,6 @@ export class GameComponent extends Component{
     xhr.send();
   }
 
-  /* method GameComponent.goToScore */
   goToScore() {
     let timeElapsedInSeconds = Math.floor(
       (Date.now() - this._startTime) / 1000
@@ -125,24 +116,15 @@ export class GameComponent extends Component{
     clearInterval(this._timer);
 
     setTimeout(
-      // TODO #arrow-function: use arrow function instead.
-      function () {
+      () =>  {
         let scorePage = "./#score";
-        // TODO #template-literals:  use template literals (backquotes)
-        window.location =
-          scorePage +
-          "?name=" +
-          this._name +
-          "&size=" +
-          this._size +
-          "&time=" +
-          timeElapsedInSeconds;
-      }.bind(this),
+        window.location = `${scorePage}?name=${this._name}&size=${this._size}&time=${timeElapsedInSeconds}`;
+
+      },
       750
     );
   }
 
-  /* method GameComponent._flipCard */
   _flipCard(card) {
     if (this._busy) {
       return;
@@ -152,23 +134,17 @@ export class GameComponent extends Component{
       return;
     }
 
-    // flip the card
     card.flip();
 
-    // if flipped first card of the pair
     if (!this._flippedCard) {
-      // keep this card flipped and wait for the second card of the pair
       this._flippedCard = card;
     } else {
-      // second card of the pair flipped...
 
-      // if cards are the same
       if (card.equals(this._flippedCard)) {
         this._flippedCard.matched = true;
         card.matched = true;
         this._matchedPairs += 1;
 
-        // reset flipped card for the next turn.
         this._flippedCard = null;
 
         if (this._matchedPairs === this._size) {
@@ -177,19 +153,14 @@ export class GameComponent extends Component{
       } else {
         this._busy = true;
 
-        // cards did not match
-        // wait a short amount of time before hiding both cards
         setTimeout(
-          // TODO #arrow-function: use arrow function instead.
-          function () {
-            // hide the cards
+          () =>  {
             this._flippedCard.flip();
             card.flip();
             this._busy = false;
 
-            // reset flipped card for the next turn.
             this._flippedCard = null;
-          }.bind(this),
+          },
           500
         );
       }
@@ -197,7 +168,6 @@ export class GameComponent extends Component{
   }
 }
 
-// TODO #card-component: Change images location to /app/components/game/card/assets/***.png
 import back from "/src/assets/cards/back.png";
 import card0 from "/src/assets/cards/card-0.png";
 import card1 from "/src/assets/cards/card-1.png";
@@ -224,16 +194,12 @@ let CARDS_IMAGE = [
   card9,
 ];
 
-// TODO #extends: extends Component
-/* class CardComponent constructor */
+
 class CardComponent extends Component{
   constructor(id) {
-    // TODO #extends: call super(CARD_TEMPLATE)
     super(CARD_TEMPLATE)
-    // is this card flipped?
     this._flipped = false;
 
-    // has the matching card has been discovered already?
     this.matched = false;
 
     this._elt = document.createElement("div");
