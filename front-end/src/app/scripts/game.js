@@ -16,52 +16,38 @@ let environment = {
   },
 };
 
-// TODO #extends: extend Component
 export class GameComponent extends Component{
   constructor() {
-    // TODO #extends: call super(template)
     super(template)
-    // gather parameters from URL
     let params = parseUrl();
 
-    // save player name & game ize
     this._name = params.name;
     this._size = parseInt(params.size) || 9;
     this._flippedCard = null;
     this._matchedPairs = 0;
   }
 
-  /* method GameComponent.init */
   init() {
-    // fetch the cards configuration from the server
     this.fetchConfig(
-      // TODO #arrow-function: use arrow function instead.
       (config) => {
         this._config = config;
         this._boardElement = document.querySelector(".cards");
 
-        // create cards out of the config
         this._cards = [];
-        // TODO #functional-programming: use Array.map() instead.
-        for (let i in this._config.ids) {
-          this._cards[i] = new CardComponent(this._config.ids[i]);
-        }
+        this._cards = this._config.ids.map(id => new CardComponent(id));
 
-        // TODO #functional-programming: use Array.forEach() instead.
-        // TODO #let-const: replace let with let.
-        for (let i in this._cards) {
-          let card = this._cards[i];
 
-          // TODO #let-const: extract function _appendCard (ie: copy its body here and remove the function)
+        this._cards.forEach(card => {
           this._boardElement.appendChild(card.getElement());
-
+        
           card.getElement().addEventListener(
             "click",
-            // TODO #arrow-function: use arrow function instead.
-            () =>  {
+            () => {
               this._flipCard(card);
             }
-          );        }
+          );
+        });
+        
 
         this.start();
       }
@@ -213,18 +199,15 @@ class CardComponent extends Component{
     this._imageElt.querySelector("img.back-face").src = CARDS_IMAGE[0];
   }
 
-  /* method CardComponent.getElement */
   getElement() {
     return this._elt;
   }
 
-  /* method CardComponent.flip */
   flip() {
     this._flipped = !this._flipped;
     this._imageElt.classList.toggle("flip");
   }
 
-  /* method CardComponent.equals */
   equals(card) {
     return card._id === this._id;
   }
