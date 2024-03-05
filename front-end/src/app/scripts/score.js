@@ -6,7 +6,7 @@ export class ScoreComponent extends Component {
   constructor() {
     super(template)
     // TODO #extends: call super(template)
-    var params = parseUrl();
+    let params = parseUrl();
     this.name = params.name;
     this.size = parseInt(params.size);
     this.time = parseInt(params.time);
