@@ -4,6 +4,8 @@ import { Router } from "./router";
 import { NavbarComponent } from "./app/components/navbar/navbar.component";
 customElements.define("my-navbar", NavbarComponent);
 
+import { FooterComponent } from "./app/components/footer/footer.component";
+customElements.define("my-footer", FooterComponent);
 
 import { WelcomeComponent } from "./app/components/welcome/welcome.component";
 import { GameComponent } from "./app/components/game/game.component";
